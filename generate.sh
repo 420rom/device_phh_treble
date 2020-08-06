@@ -29,11 +29,6 @@ for part in a ab;do
 					apps_script='$(call inherit-product, device/phh/treble/gapps.mk)'
 					apps_name="with GApps"
 				fi
-				if [ "$apps" == "gapps-go" ];then
-					apps_suffix="o"
-					apps_script='$(call inherit-product, device/phh/treble/gapps-go.mk)'
-					apps_name="Go"
-				fi
 				if [ "$apps" == "foss" ];then
 					apps_suffix="f"
 					apps_script='$(call inherit-product, vendor/foss/foss.mk)'
@@ -87,9 +82,9 @@ $apps_script
 $rom_script
 
 PRODUCT_NAME := $target
-PRODUCT_DEVICE := phhgsi_${arch}_$part
-PRODUCT_BRAND := Android
-PRODUCT_MODEL := Phh-Treble $apps_name
+PRODUCT_DEVICE := 420rom_gsi_${arch}_$part
+PRODUCT_BRAND := Samsung
+PRODUCT_MODEL := 420rom-Treble $apps_name
 
 PRODUCT_PACKAGES += $extra_packages
 
