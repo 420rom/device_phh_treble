@@ -79,9 +79,9 @@ $apps_script
 $rom_script
 
 PRODUCT_NAME := $target
-PRODUCT_DEVICE := 420rom_gsi_${arch}_$part
+PRODUCT_DEVICE := phhgsi_${arch}_$part
 PRODUCT_BRAND := Samsung
-PRODUCT_MODEL := 420rom-Treble $apps_name
+PRODUCT_MODEL := Phh-Treble $apps_name
 
 PRODUCT_PACKAGES += $extra_packages
 
