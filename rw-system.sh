@@ -331,6 +331,12 @@ if getprop ro.build.overlay.deviceid |grep -q -e CPH1859 -e CPH1861 -e RMX1811 -
     setprop persist.sys.qcom-brightness "$(cat /sys/class/leds/lcd-backlight/max_brightness)"
 fi
 
+if getprop ro.build.overlay.deviceid |grep -iq -e RMX2020 -e RMX2027;then	
+    setprop persist.sys.qcom-brightness 2047
+    setprop persist.sys.overlay.devinputjack true
+    setprop persist.sys.phh.fingerprint.nocleanup true
+fi
+
 if getprop ro.vendor.build.fingerprint | grep -iq \
     -e xiaomi/beryllium/beryllium -e xiaomi/sirius/sirius \
     -e xiaomi/dipper/dipper -e xiaomi/ursa/ursa -e xiaomi/polaris/polaris \
@@ -576,6 +582,8 @@ if [ -f /system/phh/secure ];then
         fi
     }
 
+    setprop ctl.stop console
+    dmesg -n 1
     copyprop ro.build.device ro.vendor.build.device
     copyprop ro.system.build.fingerprint ro.vendor.build.fingerprint
     copyprop ro.bootimage.build.fingerprint ro.vendor.build.fingerprint
@@ -699,6 +707,11 @@ if [ -e /dev/sprd-adf-dev ];then
     setprop ro.config.avoid_gfx_accel true
 fi
 
+# Fix sensor services crashing on SPRD devices with Pie vendor
+if getprop ro.hardware.keystore | grep -iq sprd && [ "$vndk" -le 28 ]; then
+    setprop persist.sys.phh.disable_sensor_direct_report true
+fi
+
 # Fix manual network selection with old modem
 # https://github.com/LineageOS/android_hardware_ril/commit/e3d006fa722c02fc26acdfcaa43a3f3a1378eba9
 if getprop ro.vendor.build.fingerprint | grep -iq \
@@ -780,7 +793,7 @@ if getprop ro.build.overlay.deviceid |grep -iq -e RMX1941 -e RMX1945 -e RMX1943 
     setprop persist.sys.phh.mainkeys 0
 fi
 
-if getprop ro.build.overlay.deviceid |grep -iq -e RMX2185;then
+if getprop ro.build.overlay.deviceid |grep -iq -e RMX2185 -e RMX1941 -e RMX1945 -e RMX1943 -e RMX1942;then
     setprop persist.sys.overlay.devinputjack true
 fi
 
